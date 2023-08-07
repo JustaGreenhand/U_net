@@ -6,7 +6,7 @@ from PIL import Image
 
 
 
-def read_split(root):
+def read_split(root, mode:str = "train"):
     if os.path.exists(root) == False:
         print("--the dataset does not exict.--")
         exit()
@@ -14,16 +14,19 @@ def read_split(root):
     #print(Myclass)
     #['imagesTr', 'imagesTs', 'labelsTr', 'labelsTs']
     Myclass.sort()
-    train_name = [cla for cla in os.listdir(os.path.join(root, Myclass[0]))]
-    test_name = [cla for cla in os.listdir(os.path.join(root, Myclass[1]))]
-
-    train_img_path = [os.path.join(root, Myclass[0], name) for name in train_name]
-    train_label_path = [os.path.join(root, Myclass[2], name) for name in train_name]
-    test_img_path = [os.path.join(root, Myclass[1], name) for name in test_name]
-    test_label_path = [os.path.join(root, Myclass[3], name) for name in test_name]
-
+    if mode == "train":
+        train_name = [cla for cla in os.listdir(os.path.join(root, Myclass[0]))]
+        train_img_path = [os.path.join(root, Myclass[0], name) for name in train_name]
+        train_label_path = [os.path.join(root, Myclass[2], name) for name in train_name]
+        return train_img_path,train_label_path
+    
+    elif mode == "test":
+        test_name = [cla for cla in os.listdir(os.path.join(root, Myclass[1]))]
+        test_img_path = [os.path.join(root, Myclass[1], name) for name in test_name]
+        test_label_path = [os.path.join(root, Myclass[3], name) for name in test_name]
+        return test_img_path,test_label_path
     #print(train_label_path,train_img_path,test_img_path,test_label_path)
-    return train_img_path,train_label_path,test_img_path,test_label_path
+    # return train_img_path,train_label_path,test_img_path,test_label_path
 
 class My_Dataset(Dataset):
     def __init__(self, img_path: list, label_path: list, transforms= None, dataset_type = "train"):
