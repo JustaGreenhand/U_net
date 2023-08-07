@@ -9,7 +9,7 @@ from torchvision.utils import save_image
 import os
 
 path = "./archive"
-train_img_path, train_label_path, test_img_path, test_label_path = My_dataset.read_split(path)
+test_img_path, test_label_path = My_dataset.read_split(path, "test")
 Available = torch.cuda.is_available()
 USE_GPU = True
 mask_path = "./archive/save_mask"

@@ -7,11 +7,10 @@ from torch.utils.data import DataLoader
 from Network import Unet
 import torch.nn as nn
 # from torch.utils.tensorboard import SummaryWriter
-import cv2
 
 path = "./archive"
 #path
-train_img_path, train_label_path, test_img_path, test_label_path = My_dataset.read_split(path)
+train_img_path, train_label_path = My_dataset.read_split(path)
 #print(train_img_path,train_label_path,test_img_path,test_label_path)
 #transforms
 
@@ -29,11 +28,6 @@ data_transforms = {
         "train": transforms.Compose([
             transforms.ToTensor(),
             transforms.Resize(512,antialias=True),
-            transforms.CenterCrop((512,512))
-            ]),
-        "test":transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Resize(512),
             transforms.CenterCrop((512,512))
             ])
     }
